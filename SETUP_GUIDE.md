@@ -51,8 +51,8 @@ If not installed:
 ### 3b. Create a Repository
 1. Click the **"+"** icon → **"New repository"**
 2. Name: `learning-recommender`
-3. Keep it **Public** (required for free Railway/Vercel)
-4. Do NOT check "Add README" (you already have one)
+3. Keep it **Public**
+4. Do NOT check "Add README"
 5. Click **"Create repository"**
 6. Copy the HTTPS URL shown (e.g., `https://github.com/YOUR_USERNAME/learning-recommender.git`)
 
@@ -68,171 +68,104 @@ git remote add origin https://github.com/YOUR_USERNAME/learning-recommender.git
 git push -u origin main
 ```
 
-When prompted, enter your GitHub username and password.
-
-> **Note:** GitHub may ask for a Personal Access Token instead of password.
-> If so: GitHub → Settings → Developer Settings → Personal Access Tokens → Generate new token → check "repo" scope → use that as your password.
-
-✅ **Code is on GitHub!** Verify by visiting your repo URL.
-
 ---
 
 ## Step 4: Deploy Backend on Railway
 
-Railway will automatically run `npm install` and start the server for you.
-
 ### 4a. Create Railway Account
 1. Go to [railway.app](https://railway.app)
 2. Click **"Login"** → **"Login with GitHub"**
-3. Authorize Railway
 
 ### 4b. Create New Project
-1. Click **"New Project"**
-2. Select **"Deploy from GitHub repo"**
-3. Click **"Configure GitHub App"** → authorize Railway to access your repos
-4. Select `learning-recommender`
-5. Railway will ask which folder — select **`backend`** as the root
-6. Click **"Deploy Now"**
-7. Wait 2-3 minutes — Railway installs dependencies and starts the server
+1. Click **"New Project"** → **"Deploy from GitHub repo"**
+2. Select `learning-recommender`
+3. When asked for root directory, set it to **`backend`**
+4. Click **"Deploy Now"** — wait 2-3 min
 
 ### 4c. Set Environment Variables
-1. In Railway dashboard, click your project
-2. Click the **"Variables"** tab
-3. Click **"New Variable"** and add each one:
+Go to your project → **"Variables"** tab → add:
 
-   | Variable | Value |
-   |---|---|
-   | `GEMINI_API_KEY` | Your key from Step 1 |
-   | `JWT_SECRET` | Any random string, e.g. `learnpath_secret_2024` |
-   | `PORT` | `5000` |
-   | `CLIENT_URL` | Leave blank for now — update after Step 5 |
+| Variable | Value |
+|---|---|
+| `GEMINI_API_KEY` | Your key from Step 1 |
+| `JWT_SECRET` | Any random string e.g. `learnpath_secret_2024` |
+| `PORT` | `5000` |
+| `CLIENT_URL` | Leave blank for now |
 
-4. Click **"Save"** — Railway auto-redeploys
+### 4d. Generate a Public URL
+1. Go to **"Settings"** → **"Networking"** → **"Generate Domain"**
+2. Copy the URL — e.g. `https://learning-recommender-production.up.railway.app`
+3. **Save this — it's your backend URL**
 
-### 4d. Get Your Backend URL
-1. In Railway, click **"Deployments"** tab
-2. Click the active (green) deployment
-3. Click **"View Logs"** — you should see `Server running on port 5000`
-4. Go back, click **"Settings"** → **"Networking"** → **"Generate Domain"**
-5. Copy the URL — looks like `https://learning-recommender-production.up.railway.app`
-6. **Save this URL** — you need it in Step 5
-
-✅ **Backend is live!**
+✅ Backend is live!
 
 ---
 
 ## Step 5: Deploy Frontend on Vercel
 
-Vercel will automatically run `npm install` and build the React app for you.
-
 ### 5a. Create Vercel Account
 1. Go to [vercel.com](https://vercel.com)
-2. Click **"Sign Up"** → **"Continue with GitHub"**
-3. Authorize Vercel
+2. Sign up with GitHub
 
 ### 5b. Import Project
 1. Click **"Add New..."** → **"Project"**
-2. Find `learning-recommender` → click **"Import"**
-3. Under **"Root Directory"** click **"Edit"** → select `frontend` → click **"Continue"**
+2. Select `learning-recommender` → **"Import"**
+3. Under **"Root Directory"** → click **"Edit"** → select `frontend`
 4. Under **"Environment Variables"** add:
 
    | Variable | Value |
    |---|---|
-   | `VITE_API_URL` | Your Railway URL from Step 4d |
+   | `VITE_API_URL` | Your Railway URL from Step 4d — **no trailing slash, no /api suffix** |
+   | | Example: `https://learning-recommender-production.up.railway.app` |
 
-5. Click **"Deploy"**
-6. Wait 1-2 minutes
+5. Click **"Deploy"** — wait 1-2 min
+6. Copy your Vercel URL — e.g. `https://learning-recommender.vercel.app`
 
-### 5c. Get Your Frontend URL
-1. After deploy, Vercel shows a success screen
-2. Copy the URL — looks like `https://learning-recommender.vercel.app`
-3. **Save this URL** — this is your live app!
-
-✅ **Frontend is live!**
+✅ Frontend is live!
 
 ---
 
 ## Step 6: Final Configuration
 
-### Update Backend's CLIENT_URL
-1. Go back to Railway dashboard
-2. Click **"Variables"** tab
-3. Update `CLIENT_URL` = your Vercel URL from Step 5c
-   - Example: `https://learning-recommender.vercel.app`
-4. Click **"Save"** — Railway auto-redeploys (takes ~1 min)
+1. Go back to Railway → **"Variables"**
+2. Set `CLIENT_URL` = your Vercel URL (e.g. `https://learning-recommender.vercel.app`)
+3. Click **"Save"** — auto-redeploys
 
 ---
 
-## Step 7: Test Your Live App
+## Step 7: Test
 
-1. Open your Vercel URL in browser
-2. Try uploading a resume (PDF or TEX)
-3. Go through the full flow:
-   - See 3 career paths
-   - Select time + resource type
-   - Pick a topic
-   - View resources
-   - Rate resources
+Open your Vercel URL → upload a resume → go through the full flow.
 
-✅ **App is fully live!**
+---
+
+## ⚠️ Most Common Mistake
+
+**`VITE_API_URL` must be ONLY the Railway domain — no `/api` at the end.**
+
+✅ Correct: `https://learning-recommender-production.up.railway.app`
+❌ Wrong:   `https://learning-recommender-production.up.railway.app/api`
+
+If you set it wrong, go to Vercel → Settings → Environment Variables → fix it → Redeploy.
 
 ---
 
 ## Troubleshooting
 
+### Upload fails — error shows "API: not set"
+- `VITE_API_URL` is not set in Vercel
+- Go to Vercel → Settings → Environment Variables → add it → Redeploy
+
+### Upload fails — error shows "API: https://..."
+- Backend is unreachable or crashing
+- Check Railway logs: Dashboard → Logs tab
+- Verify all env vars are set in Railway
+
+### CORS error in browser console
+- `CLIENT_URL` in Railway doesn't match your Vercel URL
+- Fix it in Railway → Variables → Save
+
 ### Railway deployment fails
-1. Click **"Deployments"** → click the failed deployment → **"View Logs"**
-2. Common causes:
-   - Missing env var → go to Variables tab, add it, redeploy
-   - Wrong start command → check `backend/Procfile` says `web: node server.js`
-
-### Vercel deployment fails
-1. Click **"Deployments"** → click failed → **"View Build Logs"**
-2. Common causes:
-   - Wrong root directory → should be `frontend`
-   - Missing `VITE_API_URL` → add it in Settings → Environment Variables → redeploy
-
-### App loads but resume upload fails
-1. Check `GEMINI_API_KEY` is set correctly in Railway
-2. Check `VITE_API_URL` points to Railway URL (not localhost)
-3. Check `CLIENT_URL` in Railway matches your Vercel URL
-
-### "CORS error" in browser console
-1. Go to Railway → Variables
-2. Make sure `CLIENT_URL` = your exact Vercel URL (no trailing slash)
-3. Save and wait for redeploy
-
-### GitHub push asks for password
-- Use a Personal Access Token instead:
-  1. GitHub → Settings → Developer Settings → Personal Access Tokens → Tokens (classic)
-  2. Click "Generate new token (classic)"
-  3. Check the `repo` scope
-  4. Copy the token — use it as your password when pushing
-
----
-
-## Auto-Deploy on Future Changes
-
-Both Railway and Vercel watch your GitHub repo. When you push new code:
-```bash
-git add .
-git commit -m "Update something"
-git push
-```
-Both platforms automatically redeploy. No manual steps needed.
-
----
-
-## Summary
-
-| Step | Platform | Time | What it does |
-|---|---|---|---|
-| 1 | Google AI Studio | 2 min | Get Gemini API key |
-| 2 | Your machine | 5 min | Install Git |
-| 3 | GitHub | 5 min | Push code |
-| 4 | Railway | 10 min | Deploy backend (auto npm install) |
-| 5 | Vercel | 5 min | Deploy frontend (auto npm install + build) |
-| 6 | Railway | 2 min | Update CLIENT_URL |
-| 7 | Browser | 5 min | Test live app |
-
-**Total: ~35 minutes. No local npm needed.**
+- Check Railway logs for the error
+- Make sure root directory is set to `backend`
+- Verify `backend/Procfile` exists with `web: node server.js`

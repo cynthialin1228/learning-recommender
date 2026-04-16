@@ -38,7 +38,8 @@ export default function ResumeUpload({ onComplete }) {
       })
       onComplete(res.data)
     } catch (err) {
-      setError(err.response?.data?.error || 'Upload failed. Please try again.')
+      const msg = err.response?.data?.error || err.message || 'Upload failed. Please try again.'
+      setError(`${msg} (API: ${import.meta.env.VITE_API_URL || 'not set'})`)
     } finally {
       setLoading(false)
     }
