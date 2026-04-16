@@ -3,23 +3,11 @@ const { GoogleGenerativeAI } = require('@google/generative-ai')
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY)
 const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' })
 
-function handleGeminiError(err) {
-  const msg = err.message || ''
-  if (msg.includes('429') || msg.includes('quota') || msg.includes('Too Many Requests'))
-    throw new Error('Gemini API quota exceeded. Please create a new API key at aistudio.google.com and update GEMINI_API_KEY in Railway.')
-  if (msg.includes('403') || msg.includes('API_KEY_INVALID'))
-    throw new Error('Invalid Gemini API key. Check GEMINI_API_KEY in Railway environment variables.')
-  if (msg.includes('404'))
-    throw new Error('Gemini model not found. Check the model name in gemini.js.')
-  throw err
-}
-
 /**
  * Analyze resume text and extract structured data
  */
 async function analyzeResume(resumeText) {
-  const prompt = `
-You are a career advisor analyzing a resume. Extract the following from the resume text and return ONLY valid JSON.
+  const prompt = `You are a career advisor analyzing a resume. Extract the following from the resume text and return ONLY valid JSON.
 
 Resume:
 """
@@ -53,15 +41,15 @@ Return this exact JSON structure:
     }
   ],
   "identifiedGaps": ["skills or knowledge areas missing for these roles"]
-}
-`
+}`
+
   try {
     const result = await model.generateContent(prompt)
     const text = result.response.text()
     const clean = text.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim()
     return JSON.parse(clean)
   } catch (err) {
-    handleGeminiError(err)
+    throw err
   }
 }
 
@@ -69,8 +57,7 @@ Return this exact JSON structure:
  * Generate learning topics for a given career path and available time
  */
 async function generateLearningTopics({ careerPath, skills, gaps, experienceLevel, availableMinutes, sourceType }) {
-  const prompt = `
-You are a personalized learning advisor. Generate learning topics for someone with the following profile:
+  const prompt = `You are a personalized learning advisor. Generate learning topics for someone with the following profile:
 
 Career Path Goal: ${careerPath}
 Current Skills: ${skills.join(', ')}
@@ -96,15 +83,15 @@ Rules:
 - Return 3-5 topics that fit within the available time total
 - Topics should directly address identified gaps
 - Match difficulty to experience level
-- searchQuery should be specific enough to find quality free resources
-`
+- searchQuery should be specific enough to find quality free resources`
+
   try {
     const result = await model.generateContent(prompt)
     const text = result.response.text()
     const clean = text.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim()
     return JSON.parse(clean)
   } catch (err) {
-    handleGeminiError(err)
+    throw err
   }
 }
 
