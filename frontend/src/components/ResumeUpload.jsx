@@ -31,6 +31,10 @@ export default function ResumeUpload({ onComplete }) {
     setLoading(true)
     setError('')
     try {
+      // First, test if backend is reachable
+      const healthCheck = await api.get('/api/health')
+      console.log('✓ Backend is reachable:', healthCheck.data)
+      
       const form = new FormData()
       form.append('resume', file)
       const res = await api.post('/api/resumes/upload', form, {
