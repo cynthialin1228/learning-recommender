@@ -1,0 +1,71 @@
+.topics-page { display: flex; flex-direction: column; gap: 16px; }
+.back-btn { align-self: flex-start; }
+
+.topics-page h2 { font-size: 1.5rem; }
+.topics-sub { color: var(--text-muted); font-size: 14px; margin-top: -8px; }
+
+.topics-list { display: flex; flex-direction: column; gap: 12px; }
+
+.topic-card {
+  cursor: pointer;
+  transition: all 0.2s;
+  padding: 20px 24px;
+  position: relative;
+}
+
+.topic-card:hover { border-color: var(--accent); transform: translateX(4px); }
+
+.topic-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 6px;
+}
+
+.topic-top h3 { font-size: 1rem; }
+
+.diff-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 20px;
+  white-space: nowrap;
+  text-transform: uppercase;
+}
+
+.topic-time { font-size: 13px; color: var(--text-muted); }
+
+.topic-arrow {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  font-size: 1.2rem;
+  color: var(--text-muted);
+  opacity: 0;
+  transition: all 0.2s;
+}
+
+.topic-card:hover .topic-arrow { opacity: 1; color: var(--accent); }
+
+.topics-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 80px 20px;
+  color: var(--text-muted);
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.topics-error { display: flex; flex-direction: column; gap: 16px; }

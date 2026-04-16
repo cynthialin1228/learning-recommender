@@ -1,0 +1,71 @@
+.time-page { display: flex; flex-direction: column; gap: 20px; }
+.back-btn { align-self: flex-start; }
+
+.card h2 { font-size: 1.4rem; margin-bottom: 6px; }
+.time-sub { color: var(--text-muted); font-size: 14px; margin-bottom: 24px; }
+
+.time-presets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.preset-btn {
+  padding: 10px 18px;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.preset-btn:hover { border-color: var(--accent); color: var(--text); }
+.preset-btn.active { background: var(--accent); border-color: var(--accent); color: white; }
+
+.time-custom { margin-bottom: 24px; }
+
+.time-input-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.time-input-row input { flex: 1; }
+
+.unit-toggle {
+  display: flex;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.unit-toggle button {
+  padding: 10px 16px;
+  background: transparent;
+  color: var(--text-muted);
+  border-radius: 0;
+  border: none;
+}
+
+.unit-toggle button.active { background: var(--accent); color: white; }
+
+.source-options {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.source-btn {
+  flex: 1;
+  min-width: 100px;
+  padding: 12px;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.source-btn:hover { border-color: var(--accent); color: var(--text); }
+.source-btn.active { background: var(--accent); border-color: var(--accent); color: white; }

@@ -1,0 +1,101 @@
+.resources-page { display: flex; flex-direction: column; gap: 16px; }
+.back-btn { align-self: flex-start; }
+
+.resource-header h2 { font-size: 1.4rem; margin-bottom: 10px; }
+
+.topic-meta { display: flex; gap: 10px; margin-bottom: 12px; }
+
+.meta-tag {
+  font-size: 12px;
+  padding: 4px 10px;
+  background: rgba(233,69,96,0.1);
+  color: var(--accent);
+  border-radius: 20px;
+  font-weight: 600;
+}
+
+.reasoning-toggle {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 13px;
+  padding: 0;
+  cursor: pointer;
+}
+
+.reasoning-toggle:hover { color: var(--text); }
+
+.reasoning-text {
+  margin-top: 10px;
+  font-size: 14px;
+  color: var(--text-muted);
+  border-left: 3px solid var(--accent);
+  padding-left: 12px;
+}
+
+.resources-title { font-size: 1.1rem; }
+
+.resources-list { display: flex; flex-direction: column; gap: 12px; }
+
+.resource-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 18px 20px;
+  text-decoration: none;
+  color: var(--text);
+  transition: all 0.2s;
+  position: relative;
+}
+
+.resource-card:hover {
+  border-color: var(--accent);
+  transform: translateX(4px);
+  text-decoration: none;
+}
+
+.resource-icon { font-size: 1.8rem; flex-shrink: 0; }
+
+.resource-body { flex: 1; }
+
+.resource-platform {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--accent);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.resource-title { font-size: 0.95rem; margin-bottom: 4px; }
+
+.resource-desc { font-size: 13px; color: var(--text-muted); }
+
+.resource-type-badge {
+  font-size: 11px;
+  padding: 3px 8px;
+  background: var(--border);
+  border-radius: 4px;
+  color: var(--text-muted);
+  white-space: nowrap;
+  align-self: flex-start;
+}
+
+.resources-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 80px 20px;
+  color: var(--text-muted);
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }

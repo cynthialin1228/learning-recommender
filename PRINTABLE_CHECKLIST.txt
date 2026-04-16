@@ -1,0 +1,250 @@
+================================================================================
+                    LEARNPATH DEPLOYMENT CHECKLIST
+                         Plan A: Local + Cloud
+================================================================================
+
+PHASE 1: LOCAL DEVELOPMENT (30 min)
+================================================================================
+
+[ ] Install Node.js
+    - Go to nodejs.org
+    - Download LTS version
+    - Run installer
+    - Verify: node --version && npm --version
+
+[ ] Get Gemini API Key
+    - Go to aistudio.google.com
+    - Click "Get API Key"
+    - Copy key (save it!)
+
+[ ] Backend Setup
+    - cd backend
+    - npm install
+    - cp .env.example .env
+    - Edit .env:
+      * GEMINI_API_KEY=<your_key>
+      * JWT_SECRET=my_secret_123
+    - npm run dev
+    - Verify: "Server running on port 5000"
+
+[ ] Frontend Setup (new terminal)
+    - cd frontend
+    - npm install
+    - npm run dev
+    - Verify: "Local: http://localhost:3000/"
+
+[ ] Test Locally
+    - Open http://localhost:3000
+    - Upload a test resume
+    - Go through full flow
+    - Verify resources load
+
+
+PHASE 2: GITHUB SETUP (5 min)
+================================================================================
+
+[ ] Create GitHub Account
+    - Go to github.com
+    - Sign up (free)
+
+[ ] Create Repository
+    - Click "New repository"
+    - Name: learning-recommender
+    - Click "Create repository"
+
+[ ] Push Code to GitHub
+    - From project root:
+      git init
+      git add .
+      git commit -m "Initial commit"
+      git branch -M main
+      git remote add origin https://github.com/YOUR_USERNAME/learning-recommender.git
+      git push -u origin main
+    - Verify code appears on GitHub
+
+
+PHASE 3: DEPLOY BACKEND (10 min)
+================================================================================
+
+[ ] Create Railway Account
+    - Go to railway.app
+    - Sign up with GitHub
+
+[ ] Create Project
+    - Click "Start a New Project"
+    - Select "Deploy from GitHub repo"
+    - Authorize Railway
+    - Select learning-recommender repo
+    - Click "Deploy"
+    - Wait 2-3 minutes
+
+[ ] Set Environment Variables
+    - In Railway, click your project
+    - Go to "Variables" tab
+    - Add GEMINI_API_KEY = <your_key>
+    - Add JWT_SECRET = <same_as_local>
+    - Click "Save"
+    - Wait for auto-redeploy
+
+[ ] Get Backend URL
+    - Go to "Deployments" tab
+    - Click active deployment
+    - Copy "Public URL"
+    - Save this URL!
+
+
+PHASE 4: DEPLOY FRONTEND (5 min)
+================================================================================
+
+[ ] Create Vercel Account
+    - Go to vercel.com
+    - Sign up with GitHub
+
+[ ] Create Project
+    - Click "Add New..." → "Project"
+    - Select learning-recommender repo
+    - Set Root Directory: frontend
+    - Click "Deploy"
+    - Wait 1-2 minutes
+
+[ ] Set Environment Variables
+    - In Vercel, go to "Settings" → "Environment Variables"
+    - Add VITE_API_URL = <Railway_URL_from_Phase_3>
+    - Click "Save"
+    - Go to "Deployments" → click latest → "Redeploy"
+    - Wait for redeploy
+
+[ ] Get Frontend URL
+    - Go to "Deployments" tab
+    - Click active deployment
+    - Copy "Production URL"
+    - Save this URL!
+
+
+PHASE 5: FINAL CONFIGURATION (5 min)
+================================================================================
+
+[ ] Update Backend's CLIENT_URL
+    - Go back to Railway dashboard
+    - Go to "Variables"
+    - Update CLIENT_URL = <Vercel_URL_from_Phase_4>
+    - Click "Save"
+    - Wait for auto-redeploy
+
+[ ] Test Live App
+    - Open Vercel frontend URL in browser
+    - Upload a resume
+    - Go through full flow
+    - Verify everything works
+
+
+OPTIONAL: CUSTOM DOMAIN
+================================================================================
+
+[ ] Add Domain to Vercel (optional)
+    - In Vercel, go to "Settings" → "Domains"
+    - Add your domain
+    - Follow DNS setup
+
+[ ] Add Domain to Railway (optional)
+    - In Railway, go to "Settings" → "Custom Domain"
+    - Add your domain
+    - Follow DNS setup
+
+
+TROUBLESHOOTING CHECKLIST
+================================================================================
+
+If something doesn't work:
+
+[ ] Backend won't start
+    - Check: node --version
+    - Try: PORT=5001 npm run dev
+
+[ ] "Cannot find module" error
+    - Try: npm install
+    - Or: rm -rf node_modules && npm install
+
+[ ] Gemini API errors
+    - Verify API key is correct (no spaces)
+    - Check quota at aistudio.google.com
+
+[ ] Frontend can't reach backend
+    - Verify VITE_API_URL is set in Vercel
+    - Check backend is running (visit Railway URL)
+
+[ ] Database errors
+    - Delete backend/data/app.db
+    - Restart backend
+
+[ ] Railway deployment fails
+    - Check Railway logs: Dashboard → Logs
+    - Verify env vars are set
+    - Try redeploying
+
+[ ] Vercel deployment fails
+    - Check Vercel logs: Deployments → click → Logs
+    - Verify VITE_API_URL is set
+    - Try redeploying
+
+[ ] Frontend can't reach backend after deployment
+    - Verify VITE_API_URL = Railway URL
+    - Verify CLIENT_URL = Vercel URL
+    - Redeploy both
+
+
+FINAL VERIFICATION
+================================================================================
+
+[ ] Local app running at http://localhost:3000
+[ ] Backend live on Railway
+[ ] Frontend live on Vercel
+[ ] Can upload resume
+[ ] Can see 3 career paths
+[ ] Can select time and topic
+[ ] Can see resource links
+[ ] Can rate resources
+[ ] Full app works end-to-end
+
+
+SUMMARY
+================================================================================
+
+Total Time: ~55 minutes
+
+Phase 1 (Local):        30 min  ✓
+Phase 2 (GitHub):        5 min  ✓
+Phase 3 (Backend):      10 min  ✓
+Phase 4 (Frontend):      5 min  ✓
+Phase 5 (Config):        5 min  ✓
+                        --------
+                        55 min  ✓
+
+Cost: $0/month ✓
+
+Status: READY TO DEPLOY! 🚀
+
+
+NEXT STEPS
+================================================================================
+
+1. Read SETUP_GUIDE.md for detailed instructions
+2. Follow the phases above
+3. Use DEPLOYMENT_CHECKLIST.md to track progress
+4. Check TROUBLESHOOTING.md if stuck
+5. Deploy and share your app!
+
+
+CONTACT & SUPPORT
+================================================================================
+
+If stuck:
+1. Check TROUBLESHOOTING.md
+2. Check logs (Railway or Vercel)
+3. Read error message carefully
+4. Try restarting
+5. Check prerequisites
+
+Good luck! 🎉
+
+================================================================================

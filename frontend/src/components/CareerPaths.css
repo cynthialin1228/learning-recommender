@@ -1,0 +1,54 @@
+.paths-page { display: flex; flex-direction: column; gap: 20px; }
+
+.back-btn { align-self: flex-start; }
+
+.paths-header h2 { font-size: 1.2rem; margin-bottom: 8px; }
+.background-text { color: var(--text-muted); font-size: 14px; }
+
+.section-title { font-size: 1.4rem; }
+.section-sub { color: var(--text-muted); font-size: 14px; margin-top: -12px; }
+
+.paths-list { display: flex; flex-direction: column; gap: 14px; }
+
+.path-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  cursor: pointer;
+  transition: all 0.2s;
+  padding: 20px 24px;
+}
+
+.path-card:hover {
+  border-color: var(--accent);
+  transform: translateX(4px);
+}
+
+.path-rank {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--accent);
+  min-width: 40px;
+}
+
+.path-body { flex: 1; }
+
+.path-title-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+
+.path-icon { font-size: 1.3rem; }
+.path-title-row h3 { font-size: 1.1rem; }
+.path-field { font-size: 12px; color: var(--accent); font-weight: 600; margin-bottom: 6px; }
+.path-reasoning { font-size: 13px; color: var(--text-muted); }
+
+.path-arrow {
+  font-size: 1.4rem;
+  color: var(--text-muted);
+  transition: all 0.2s;
+}
+
+.path-card:hover .path-arrow { color: var(--accent); transform: translateX(4px); }

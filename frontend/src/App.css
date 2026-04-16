@@ -1,0 +1,48 @@
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+  background: rgba(22, 33, 62, 0.9);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.nav-email {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.main-content {
+  flex: 1;
+  max-width: 760px;
+  width: 100%;
+  margin: 40px auto;
+  padding: 0 20px 60px;
+}
+
+@media (max-width: 600px) {
+  .main-content { margin: 20px auto; }
+  .navbar { padding: 12px 16px; }
+}
