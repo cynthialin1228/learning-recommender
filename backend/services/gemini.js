@@ -3,6 +3,17 @@ const { GoogleGenerativeAI } = require('@google/generative-ai')
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY)
 const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' })
 
+function handleGeminiError(err) {
+  const msg = err.message || ''
+  if (msg.includes('429') || msg.includes('quota') || msg.includes('Too Many Requests'))
+    throw new Error('Gemini API quota exceeded. Please create a new API key at aistudio.google.com and update GEMINI_API_KEY in Railway.')
+  if (msg.includes('403') || msg.includes('API_KEY_INVALID'))
+    throw new Error('Invalid Gemini API key. Check GEMINI_API_KEY in Railway environment variables.')
+  if (msg.includes('404'))
+    throw new Error('Gemini model not found. Check the model name in gemini.js.')
+  throw err
+}
+
 /**
  * Analyze resume text and extract structured data
  */
@@ -44,11 +55,14 @@ Return this exact JSON structure:
   "identifiedGaps": ["skills or knowledge areas missing for these roles"]
 }
 `
-  const result = await model.generateContent(prompt)
-  const text = result.response.text()
-  // Strip markdown code fences if present
-  const clean = text.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim()
-  return JSON.parse(clean)
+  try {
+    const result = await model.generateContent(prompt)
+    const text = result.response.text()
+    const clean = text.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim()
+    return JSON.parse(clean)
+  } catch (err) {
+    handleGeminiError(err)
+  }
 }
 
 /**
@@ -84,10 +98,14 @@ Rules:
 - Match difficulty to experience level
 - searchQuery should be specific enough to find quality free resources
 `
-  const result = await model.generateContent(prompt)
-  const text = result.response.text()
-  const clean = text.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim()
-  return JSON.parse(clean)
+  try {
+    const result = await model.generateContent(prompt)
+    const text = result.response.text()
+    const clean = text.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim()
+    return JSON.parse(clean)
+  } catch (err) {
+    handleGeminiError(err)
+  }
 }
 
 module.exports = { analyzeResume, generateLearningTopics }
