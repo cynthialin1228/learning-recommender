@@ -19,7 +19,23 @@ const feedbackRoutes = require('./routes/feedback')
 
 const app = express()
 
-app.use(cors({ origin: process.env.CLIENT_URL || 'http://localhost:3000' }))
+// Allow requests from the configured frontend URL, or any origin if not set
+const allowedOrigins = [
+  process.env.CLIENT_URL,
+  'http://localhost:3000'
+].filter(Boolean)
+
+app.use(cors({
+  origin: (origin, callback) => {
+    // Allow requests with no origin (mobile apps, curl, Postman)
+    if (!origin) return callback(null, true)
+    if (allowedOrigins.includes(origin)) return callback(null, true)
+    // Also allow any vercel.app subdomain
+    if (origin.endsWith('.vercel.app')) return callback(null, true)
+    callback(new Error(`CORS blocked: ${origin}`))
+  },
+  credentials: true
+}))
 app.use(express.json())
 
 // Health check endpoint (no auth needed)
